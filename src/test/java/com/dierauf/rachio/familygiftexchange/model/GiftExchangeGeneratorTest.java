@@ -46,6 +46,17 @@ class GiftExchangeGeneratorTest {
 	}
 
 	@Test
+	void testGenerateGiftExchanges_NullFamilyMember() {
+		this.familyMembers = null;
+		try {
+			this.instance.generateGiftExchanges(this.familyMembers);
+			fail(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS);
+		} catch (Exception e) {
+			assertEquals(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS, e.getMessage());
+		}
+	}
+
+	@Test
 	void testGenerateGiftExchanges_TwoFamilyMembers() throws Exception {
 		this.familyMembers = new HashSet<>(Arrays.asList(0, 1));
 		Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyMembers);

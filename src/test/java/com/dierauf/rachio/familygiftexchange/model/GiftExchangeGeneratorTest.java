@@ -1,6 +1,7 @@
 package com.dierauf.rachio.familygiftexchange.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,17 +19,37 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.config.Configurator;
+=======
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GiftExchangeGeneratorTest {
 
+<<<<<<< HEAD
 	private Set<Set<Integer>> familyUnits;
+=======
+	private static final String[] HAPPY_FAMILY_MEMBER_NAMES = new String[] { "Nick", "Trevor", "Amy", "Sam", "Nancy",
+			"Matsuo-san", "Ingo", "Renato", "Judith", "Neal", "Teymour", "Ryan", "Selim", "Robert", "Claudia",
+			"Kaj-Erik", "Hesham", "Michael Sr.", "Michael Jr.", "Allison", "Brad", "Hitesh", "Khaled" };
+
+	private Set<Integer> familyMembers;
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 	private GiftExchangeGenerator instance;
 
 	@BeforeEach
 	public void setup() {
 		this.instance = GiftExchangeGenerator.instance();
+<<<<<<< HEAD
 		this.familyUnits = this.instance.generateFamilyUnits(GiftExchangeGenerator.DEFAULT_FAMILYUNIT_SIZE,
 				GiftExchangeGenerator.HAPPY_FAMILY_MEMBER_NAMES);
 		this.setLogLevel(Level.DEBUG);
@@ -37,10 +58,19 @@ class GiftExchangeGeneratorTest {
 	@Test
 	void test_generateGiftExchanges_HappyPath() throws Exception {
 		Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyUnits);
+=======
+		this.familyMembers = this.generateFamilyMembers();
+	}
+
+	@Test
+	void testGenerateGiftExchanges_HappyPath() throws Exception {
+		Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyMembers);
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 		this.assertGiftExchangePairs(giftExchangePairs);
 	}
 
 	@Test
+<<<<<<< HEAD
 	void test_generateGiftExchanges_OnlyOneFamilyUnit() {
 		Set<Integer> familyUnit1 = this.familyUnits.iterator().next();
 		this.familyUnits.clear();
@@ -61,10 +91,20 @@ class GiftExchangeGeneratorTest {
 			fail(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_UNITS);
 		} catch (Exception e) {
 			assertEquals(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_UNITS, e.getMessage());
+=======
+	void testGenerateGiftExchanges_OnlyOneFamilyMember() {
+		this.familyMembers = new HashSet<>(Arrays.asList(0));
+		try {
+			this.instance.generateGiftExchanges(this.familyMembers);
+			fail(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS);
+		} catch (Exception e) {
+			assertEquals(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS, e.getMessage());
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 		}
 	}
 
 	@Test
+<<<<<<< HEAD
 	void test_generateGiftExchanges_FamilyUnitIsNull() {
 		this.familyUnits.add(null);
 		try {
@@ -72,10 +112,20 @@ class GiftExchangeGeneratorTest {
 			fail(GiftExchangeGenerator.ERROR_MESSAGE_INVALID_FAMILY_UNIT_NULL);
 		} catch (Exception e) {
 			assertEquals(GiftExchangeGenerator.ERROR_MESSAGE_INVALID_FAMILY_UNIT_NULL, e.getMessage());
+=======
+	void testGenerateGiftExchanges_NullFamilyMember() {
+		this.familyMembers = null;
+		try {
+			this.instance.generateGiftExchanges(this.familyMembers);
+			fail(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS);
+		} catch (Exception e) {
+			assertEquals(GiftExchangeGenerator.ERROR_MESSAGE_MUST_HAVE_AT_LEAST_TWO_FAMILY_MEMBERS, e.getMessage());
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 		}
 	}
 
 	@Test
+<<<<<<< HEAD
 	void test_generateGiftExchanges_FamilyUnitContainsNullId() throws Exception {
 		Set<Integer> familyUnit = this.familyUnits.iterator().next();
 		Integer idToBeRemoved = familyUnit.iterator().next();
@@ -150,10 +200,16 @@ class GiftExchangeGeneratorTest {
 		Set<Integer> familyUnit2 = iterator.next();
 		familyUnit2.clear();
 		Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyUnits);
+=======
+	void testGenerateGiftExchanges_TwoFamilyMembers() throws Exception {
+		this.familyMembers = new HashSet<>(Arrays.asList(0, 1));
+		Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyMembers);
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 		this.assertGiftExchangePairs(giftExchangePairs);
 	}
 
 	@Test
+<<<<<<< HEAD
 	void test_main_NoArguements() {
 		try {
 			GiftExchangeGenerator.main(new String[0]);
@@ -303,12 +359,32 @@ class GiftExchangeGeneratorTest {
 		assertNotNull(giftExchangePairs);
 		System.out.println(this.instance.printOutGiftExchangeValues(giftExchangePairs,
 				GiftExchangeGenerator.HAPPY_FAMILY_MEMBER_NAMES));
+=======
+	void testGenerateGiftExchanges_StressTest() throws Exception {
+		for (int i = 2; i < HAPPY_FAMILY_MEMBER_NAMES.length; i++) {
+			this.familyMembers = new HashSet<>();
+			for (int j = 0; j < i; j++) {
+				this.familyMembers.add(j);
+			}
+			Map<Integer, Integer> giftExchangePairs = this.instance.generateGiftExchanges(this.familyMembers);
+			this.assertGiftExchangePairs(giftExchangePairs);
+			assertEquals(i, giftExchangePairs.size());
+		}
+	}
+
+	private void assertGiftExchangePairs(Map<Integer, Integer> giftExchangePairs) {
+		assertNotNull(giftExchangePairs);
+		this.printOutGiftExchangeValues(giftExchangePairs);
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 		// Verify gifter is not gifting themself.
 		giftExchangePairs.forEach((k, v) -> assertNotEquals(k, v));
 		// Verify receiver is not receiving multiple gifts.
 		this.assertReceiveOnlyOneGiftEach(giftExchangePairs);
+<<<<<<< HEAD
 		this.assertNotGiftingFamilyUnitMembers(giftExchangePairs);
 		System.out.println("----");
+=======
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 	}
 
 	// Asserts that each only receives exactly one gift.
@@ -318,14 +394,19 @@ class GiftExchangeGeneratorTest {
 		for (Integer giverId : giverIds) {
 			Integer receiverId = giftExchangePairs.get(giverId);
 			if (!receivers.add(receiverId)) {
+<<<<<<< HEAD
 				String message = GiftExchangeGenerator.HAPPY_FAMILY_MEMBER_NAMES[receiverId] + " is already receiving a gift.";
 				System.out.println(message);
 				fail(message);
+=======
+				fail(HAPPY_FAMILY_MEMBER_NAMES[receiverId] + " is already receiving a gift.");
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 				// Also means someone else is not receiving a gift.
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	private void assertNotGiftingFamilyUnitMembers(Map<Integer, Integer> giftExchangePairs) {
 		for (Set<Integer> familyUnit : this.familyUnits) {
 			for (Integer giverId : familyUnit) {
@@ -341,6 +422,20 @@ class GiftExchangeGeneratorTest {
 
 	private void setLogLevel(Level level) {
 		Configurator.setLevel(LogManager.getLogger(this.instance.getClass()).getName(), level);
+=======
+	// Print out values.
+	private void printOutGiftExchangeValues(Map<Integer, Integer> giftExchangePairs) {
+		giftExchangePairs.forEach((k, v) -> System.out.println(k + " : " + v + " - " + HAPPY_FAMILY_MEMBER_NAMES[k] + " gifts to " + HAPPY_FAMILY_MEMBER_NAMES[v]));
+		System.out.println("___");
+	}
+
+	private Set<Integer> generateFamilyMembers() {
+		Set<Integer> familyMembers = new HashSet<>();
+		for (int i = 0; i < HAPPY_FAMILY_MEMBER_NAMES.length; i++) {
+			familyMembers.add(i);
+		}
+		return familyMembers;
+>>>>>>> 9e66c6f803d510589272b45cf206c8a2a9fb42df
 	}
 
 }
